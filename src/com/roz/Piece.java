@@ -16,6 +16,8 @@ public class Piece extends StackPane{
 
     private boolean marked = false;
 
+    private Ellipse bg, ellipse;
+
     private double mouseX, mouseY;
     private double oldX, oldY;
 
@@ -24,7 +26,7 @@ public class Piece extends StackPane{
 
         relocate(x * TILE_SIZE, y * TILE_SIZE);
 
-        Ellipse bg = new Ellipse(TILE_SIZE * .3125, TILE_SIZE * 0.26);
+        bg = new Ellipse(TILE_SIZE * .3125, TILE_SIZE * 0.26);
         bg.setFill(Color.BLACK);
         bg.setStroke(Color.BLACK);
         bg.setStrokeWidth(TILE_SIZE * 0.03);
@@ -32,7 +34,7 @@ public class Piece extends StackPane{
         bg.setTranslateX((TILE_SIZE - TILE_SIZE * 0.3125 * 2) /2);
         bg.setTranslateY((TILE_SIZE - TILE_SIZE * 0.26 * 2) /2 + TILE_SIZE * 0.07);
 
-        Ellipse ellipse = new Ellipse(TILE_SIZE * .3125, TILE_SIZE * 0.26);
+        ellipse = new Ellipse(TILE_SIZE * .3125, TILE_SIZE * 0.26);
 
         ellipse.setFill(type == PieceType.RED ? Color.valueOf("#c40003") : Color.valueOf("#fff9f4"));
         ellipse.setStroke(Color.BLACK);
@@ -42,11 +44,10 @@ public class Piece extends StackPane{
         ellipse.setTranslateY((TILE_SIZE - TILE_SIZE * 0.26 * 2) /2);
 
         getChildren().addAll(bg, ellipse);
+    }
 
-        setOnMousePressed(e-> {
-            System.out.println("yes ee");
-        });
-
+    public void move(int x, int y) {
+        relocate(x * TILE_SIZE, y * TILE_SIZE);
 
     }
 

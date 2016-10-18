@@ -16,13 +16,20 @@ public class Checker extends Application {
     private Group tileGroup = new Group();
     private Group pieceGroup = new Group();
 
+    Board board;
+
+    int oldX, oldY;
+
+
+    private boolean isSelected = false;
+
     private Parent createContent() {
         Pane root = new Pane();
 
         root.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
         root.getChildren().addAll(tileGroup, pieceGroup);
 
-        Board board = new Board();
+        board = new Board();
         board.createBoard();
 
         for (int i = 0; i < board.board[0].length; i++) {
@@ -48,10 +55,21 @@ public class Checker extends Application {
                 if (tile != null)
                     tileGroup.getChildren().add(tile);
 
+                final int x = i;
+                final int y = j;
+                if (tile.getTileType() != Tile.TileType.ILLEGAL) {
+                    tile.setOnMousePressed(e -> {
+                        mousePressed(x, y);
+                    });
+                }
+
                 if (piece != null) {
-                    if (tile != null)
                         tile.setPiece(piece);
                     pieceGroup.getChildren().add(piece);
+
+                    piece.setOnMousePressed(e -> {
+                        mousePressed(x, y);
+                    });
 
                 }
             }
@@ -66,6 +84,26 @@ public class Checker extends Application {
 
         });
         return piece;
+    }
+
+    private void mousePressed(int x, int y) {
+
+        Tile tile = (Tile) tileGroup.getChildren().get(x * WIDTH + y);
+
+        if (tile.hasPiece()) {
+            isSelected = true;
+
+            tile.selectTile();
+
+            oldX = x;
+            oldY = y;
+        } else {
+            if (isSelected) {
+                board.move(oldX, oldY, x, y);
+
+            }
+        }
+
     }
 
     @Override

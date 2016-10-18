@@ -34,4 +34,11 @@ public class Board {
             }
         }
     }
+
+    public void move(int oldX, int oldY, int newX, int newY) {
+        BoardType boardType = board[oldX][oldY];
+        board[newX][newY] = boardType;
+        board[oldX][oldY] = BoardType.BLANK;
+    }
+
 }

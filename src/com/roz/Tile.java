@@ -9,6 +9,12 @@ public class Tile extends Rectangle {
         ILLEGAL, BLANK
     }
 
+    private TileType tileType;
+
+    public TileType getTileType() {
+        return tileType;
+    }
+
     private Piece piece;
 
     public boolean hasPiece() {
@@ -24,23 +30,16 @@ public class Tile extends Rectangle {
     }
 
     public Tile(TileType tileType, int x, int y) {
+        this.tileType = tileType;
         setWidth(Checker.TILE_SIZE);
         setHeight(Checker.TILE_SIZE);
 
         relocate(x * Checker.TILE_SIZE, y * Checker.TILE_SIZE);
 
         setFill(tileType == TileType.BLANK ? Color.valueOf("#feb") : Color.valueOf("#582"));
+    }
 
-        setOnMousePressed(e -> {
-//            if (hasPiece())
-            System.out.println("Hello");
-        });
-
-        if (getPiece() != null) {
-            piece.setFocusTraversable(true);
-            piece.setOnMousePressed(e -> {
-                System.out.println("yes");
-            });
-        }
+    public void selectTile() {
+        setFill(Color.BLUE);
     }
 }
